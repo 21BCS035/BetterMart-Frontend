@@ -12,7 +12,7 @@ import watch from "../images/watch.jpg";
 import Container from "../components/Container";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector} from "react-redux";
-import { getAProduct} from "../features/products/productSlice";
+import { getAProduct, rateAProduct} from "../features/products/productSlice";
 import { Markup } from "interweave";
 import {toast} from "react-toastify"
 import {addProdToCart} from "../features/user/userSlice"
@@ -25,8 +25,9 @@ const SingleProduct = () => {
   const [alreadyAdded,setAlreadyAdded] = useState(false);
   const location = useLocation();
   const getProductId = location.pathname.split("/")[2];
-  const productState = useSelector((state)=> state.product.singleproduct);
-  const cartState = useSelector((state)=> state.auth.userCart);
+  const productState = useSelector((state)=> state?.product?.singleproduct);
+  const productStates = useSelector((state)=> state?.product?.products);
+  const cartState = useSelector((state)=> state?.auth?.userCart);
   const navigate = useNavigate();
 const dispatch = useDispatch();
   useEffect(()=>{
@@ -79,9 +80,32 @@ const dispatch = useDispatch();
     setIsLinkCopied(true);
   };
 
-  const closeModal = () => {
-    setIsLinkCopied(false);
-  }
+  const [comment,setComment] = useState(null);
+  
+  const [star,setStar] = useState(null);
+  
+    const addRatingToProduct = ()=>{
+
+      if(star === null)
+      {
+        toast.error("Please give rating");
+        return false;
+      }
+
+      else if(comment === null)
+      {
+        toast.error("Please add comment");
+        return false;
+      }
+
+      else{
+        dispatch(rateAProduct({star:star,comment:comment,prodId:getProductId}));
+       
+      }
+      return false;
+      
+    }   
+
   return (
     <>
       <Meta title={"Product Name"} />
@@ -307,7 +331,7 @@ const dispatch = useDispatch();
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
-                <form action="" className="d-flex flex-column gap-15">
+                {/* <form action="" onSubmit={addRatingToProduct} className="d-flex flex-column gap-15"> */}
                   <div>
                     <ReactStars
                       count={5}
@@ -315,6 +339,9 @@ const dispatch = useDispatch();
                       value={4}
                       edit={true}
                       activeColor="#ffd700"
+                      onChange={(e)=>{
+                        setStar(e);
+                      }}
                     />
                   </div>
                   <div>
@@ -325,12 +352,15 @@ const dispatch = useDispatch();
                       cols="30"
                       rows="4"
                       placeholder="Comments"
+                      onChange={(e)=>{
+                        setComment(e.target.value)
+                      }}
                     ></textarea>
                   </div>
                   <div className="d-flex justify-content-end">
-                    <button className="button border-0">Submit Review</button>
+                    <button className="button border-0" onClick={addRatingToProduct} type="button">Submit Review</button>
                   </div>
-                </form>
+                {/* </form> */}
               </div>
               <div className="reviews mt-4">
                 <div className="review">
@@ -357,71 +387,6 @@ const dispatch = useDispatch();
           </div>
         </div>
       </Container>
-      <Container class1="popular-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading">Our Popular Products</h3>
-          </div>
-        </div>
-        <div className="row">
-          <ProductCard />
-        </div>
-      </Container>
-
-      <div
-        className="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered ">
-          <div className="modal-content">
-            <div className="modal-header py-0 border-0">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body py-0">
-              <div className="d-flex align-items-center">
-                <div className="flex-grow-1 w-50">
-                  <img src={watch} className="img-fluid" alt="product imgae" />
-                </div>
-                <div className="d-flex flex-column flex-grow-1 w-50">
-                  <h6 className="mb-3">Apple Watch</h6>
-                  <p className="mb-1">Quantity: asgfd</p>
-                  <p className="mb-1">Color: asgfd</p>
-                  <p className="mb-1">Size: asgfd</p>
-                </div>
-              </div>
-            </div>
-            <div className="modal-footer border-0 py-0 justify-content-center gap-30">
-              <button type="button" className="button" data-bs-dismiss="modal">
-                View My Cart
-              </button>
-              <button type="button" className="button signup">
-                Checkout
-              </button>
-            </div>
-            <div className="d-flex justify-content-center py-3">
-              <Link
-                className="text-dark"
-                to="/product"
-                onClick={() => {
-                  closeModal();
-                }}
-              >
-                Continue To Shopping
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 };
