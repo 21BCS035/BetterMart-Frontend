@@ -20,7 +20,7 @@ const OrderItem = (props) => {
               <div className='mx-5'><p>
                 <ul className='colors ps-0'>
                 Color: 
-                  <li style={{backgroundColor:item?.orderItems[0]?.color}}></li>
+                  <li style={{backgroundColor:item?.orderItems[0]?.color?.title}}></li>
                 </ul>
                 {/* {item?.orderItems[0]?.color} */}
                 </p></div> 

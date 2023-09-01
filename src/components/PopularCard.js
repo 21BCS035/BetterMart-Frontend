@@ -4,7 +4,7 @@ import { useLocation,useNavigate } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
 import { Markup } from 'interweave';
 import wish from "../images/wish.svg";
-import watch2 from "../images/watch-1.avif";
+import BM from "../images/BM.png";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch} from "react-redux";
@@ -40,7 +40,7 @@ const PopularCard = (props) => {
           </div>
           <div className="product-image">
             <img src={item?.images[0]?.url} className="img-fluid mx-auto " width={230} alt="product" />
-            <img src={watch2} className="img-fluid" alt="product " />
+            <img src={BM} className="img-fluid" width={258} alt="product " />
           </div>
           <div className="product-details">
             <h6 className="brand">{item.brand}</h6>
@@ -63,8 +63,8 @@ const PopularCard = (props) => {
           </div>
           <div className="action-bar position-absolute">
             <div className="d-flex flex-column gap-15">
-              <button className="border-0 bg-transparent">
-                <img src={prodcompare} alt="compare" />
+              <button className="border-0 bg-transparent ">
+                <img  src={prodcompare} alt="compare" />
               </button>
               <button className="border-0 bg-transparent">
                 <img onClick={()=>navigate("/product/"+item?._id)} src={view} alt="view" />

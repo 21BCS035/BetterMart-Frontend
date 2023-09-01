@@ -160,6 +160,7 @@ export const authSlice = createSlice({
             if(state.isSuccess ===true)
             {
                   toast.info("You have been registered Succesfully")
+                  
             }
         })
         .addCase(registerUser.rejected,(state,action)=>{
@@ -169,7 +170,7 @@ export const authSlice = createSlice({
             state.message = action.error;
             if(state.isError === true)
             {
-                toast.info("Something went wrong or you are already registered");
+                toast.info("Something went wrong or User already exists");
             }
         })
         .addCase(login.pending,(state) =>{

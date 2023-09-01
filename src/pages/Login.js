@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess && user) {
-      toast.success("You have been login successfully Successfullly!", {
+      toast.success("Login Successfullly!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,

@@ -1,12 +1,12 @@
 import React,{useEffect, useState} from "react";
 import { NavLink, Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
-import compare from "../images/compare.svg";
+import BM from "../images/BM.png"
 import wishlist from "../images/wishlist.svg";
 import user from "../images/user.svg";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import {AiOutlineLogout} from "react-icons/ai"
 import { Typeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [totalAmount,settotalAmount] = useState(null);
-  // const dispatch = useDispatch();
   const productState = useSelector((state)=> state?.product?.products);
   const [productOpt,setProductOpt] = useState([]);
   const userCartState = useSelector((state)=> state.auth.userCart);
@@ -51,7 +50,12 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row">
             <div className="col-6">
-              <p className="text-white mb-0">
+            
+              <p className="text-white mb-0 ">
+              <img width={90} src={BM} alt="BM"  style={{
+      marginRight: '10px',
+      
+    }} className="rounded-3"/>
               Shop the World at Your Fingertips!
               </p>
             </div>
@@ -70,8 +74,10 @@ const Header = () => {
         <div className="container-xxl">
           <div className="row align-items-center">
             <div className="col-2">
-              <h2>
-                <Link to= "/" className="text-white">BetterMart</Link>
+              <h2 className="d-flex mr-2">
+               
+                 <Link to= "/" className="text-white "> BetterMart</Link>
+                
               </h2>
             </div>
             <div className="col-5">
@@ -96,17 +102,7 @@ const Header = () => {
             </div>
             <div className="col-5">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
-                <div>
-                  <Link
-                    to="/compare-product"
-                    className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src={compare} alt="compare" />
-                    <p className="mb-0">
-                      Compare <br /> Products
-                    </p>
-                  </Link>
-                </div>
+               
                 <div>
                   <Link
                     to="/wishlist"

@@ -1,7 +1,7 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Container from "../components/Container";
 import CustomInput from "../components/CustomInput";
 import { useFormik } from 'formik';
@@ -14,7 +14,7 @@ let schema = Yup.object().shape({
 });
 
 const Forgotpassword = () => {
-
+  
   const dispatch = useDispatch();
 
   const formik = useFormik({
@@ -24,6 +24,7 @@ const Forgotpassword = () => {
     validationSchema:schema,
     onSubmit: values => {
       dispatch(forgotPasswordToken(values))
+      
     },
   });
 

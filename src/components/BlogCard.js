@@ -10,7 +10,7 @@ const BlogCard = (props) => {
     {
       data?.map((item,index)=>{
         return (
-          <div className="blog-card clblog " key={index}>
+          <div className="blog-card clblog mb-5 " key={index}>
           <div className="card-image">
             <img src={item?.images[0].url} className="img-fluid w-100" alt="blog" />
           </div>

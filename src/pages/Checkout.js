@@ -8,7 +8,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import axios from "axios"
 import { config } from "../utils/axiosConfig";
-import { createAOrder } from "../features/user/userSlice";
+import { createAOrder, getUserCart } from "../features/user/userSlice";
+import {Country,State} from "country-state-city"
 
 let schema = Yup.object().shape({
   firstName: Yup.string().required("First name is required"),
@@ -24,10 +25,9 @@ const Checkout = () => {
   const dispatch = useDispatch();
   const [totalAmount,settotalAmount] = useState(null);
   const [shippingInfo,setshippingInfo] = useState(null);
-  const [paymentInfo,setPaymentInfo] = useState({razorpayPaymentId:"",razorpayOrderId:""})
+  //const [paymentInfo] = useState({razorpayPaymentId:"",razorpayOrderId:""})
   const [cartProductState,setCartProductState] = useState([]);
   const userCartState = useSelector((state)=> state.auth.userCart);
-  console.log(paymentInfo,shippingInfo);
   useEffect(()=>{
     let sum =0;
     for(let index = 0;index<userCartState?.length;index++)
@@ -36,6 +36,24 @@ const Checkout = () => {
     }
     settotalAmount(sum);
    },[userCartState])
+
+
+   const getTokenFromLocalStorage = localStorage.getItem("user")
+   ? JSON.parse(localStorage.getItem("user"))
+   : null;
+ 
+ const config2 = {
+   headers: {
+     Authorization: `Bearer ${
+       getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
+     }`,
+     Accept: "application/json",
+   },
+ };
+
+ useEffect(()=>{
+  dispatch(getUserCart(config2));
+ })
 
    const formik = useFormik({
     initialValues: {
@@ -52,8 +70,8 @@ const Checkout = () => {
 
     onSubmit:(values)=>{
       //alert(JSON.stringify(values))
-       setshippingInfo(values);
-       
+        setshippingInfo(values);
+       localStorage.setItem("address",JSON.stringify(values));
        setTimeout(() => {
         checkOutHandler();
        }, 300);
@@ -116,12 +134,12 @@ const Checkout = () => {
           };
 
           const result = await axios.post("http://localhost:5000/api/user/order/paymentVerification", data,config);
-           setPaymentInfo({
-            razorpayPaymentId:response.razorpay_payment_id,
-            razorpayOrderId:response.razorpay_order_id,
-           })
+          //  setPaymentInfo({
+          //   razorpayPaymentId:response.razorpay_payment_id,
+          //   razorpayOrderId:response.razorpay_order_id,
+          //  })
 
-           dispatch(createAOrder({totalPrice:totalAmount,totalPriceAfterDiscount:totalAmount,orderItems:cartProductState,shippingInfo,paymentInfo}));
+            dispatch(createAOrder({totalPrice:totalAmount,totalPriceAfterDiscount:totalAmount,orderItems:cartProductState,shippingInfo:JSON.parse(localStorage.getItem("address")),paymentInfo:result.data}));
           //alert(result);
       },
       prefill: {
@@ -190,12 +208,16 @@ const Checkout = () => {
               >
                 <div className="w-100">
                   <select name="country" value={formik.values.country} onChange={formik.handleChange("country")} onBlur={formik.handleBlur("country")} className="form-control form-select" id="">
-                    <option value="" selected disabled>
+                    {/* <option value="" selected disabled>
                       Select Country
-                    </option>
-                    <option value="India" >
+                    </option> */}
+                    {/* <option value="India" >
                       India
-                    </option>
+                    </option> */}
+                     <option value="" selected disabled>Country</option>
+                        {Country && Country.getAllCountries().map((i)=>(
+                            <option value={i.isoCode} key={i.isoCode} >{i.name}</option>
+                        ))}
                   </select>
                   <div className="error">
                     {
@@ -288,12 +310,16 @@ const Checkout = () => {
                     value={formik.values.state} 
                     onChange={formik.handleChange("state")} 
                     onBlur={formik.handleBlur("state")} className="form-control form-select" id="">
-                    <option value="" selected disabled>
+                    {/* <option value="" selected disabled>
                       Select State
                     </option>
                     <option value="Uttar Pradesh" >
                      Uttar Pradesh
-                    </option>
+                    </option> */}
+                    <option value="" selected disabled>State</option>
+                        {State && State.getStatesOfCountry("IN").map((i)=>(
+                            <option value={i.isoCode} key={i.isoCode} >{i.name}</option>
+                        ))}
                   </select>
                   <div className="error ms-2 my-1">
                     {

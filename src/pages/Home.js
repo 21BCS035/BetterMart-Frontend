@@ -13,7 +13,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import PopularCard from '../components/PopularCard';
 import wish from "../images/wish.svg";
 import { useNavigate } from "react-router-dom";
-import watch2 from "../images/watch-1.avif";
+import BM from "../images/BM.png";
 import addcart from "../images/add-cart.svg";
 import { addToWishlist } from "../features/products/productSlice";
 
@@ -130,7 +130,7 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="home-wrapper-2 py-5">
+      {/* <Container class1="home-wrapper-2 py-5">
         <div className='container-xxl'>
           <div className='row'>
             <div className='col-12'>
@@ -195,7 +195,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
 
       <Container class1="featured-wrapper py-5 home-wrapper-2">
         <div className="row">
@@ -224,7 +224,7 @@ const Home = () => {
           </div>
           <div className="product-image">
             <img src={item?.images[0]?.url} className="img-fluid mx-auto " width={230} alt="product" />
-            <img src={watch2} className="img-fluid" alt="product " />
+            <img src={BM} width={258} className="img-fluid" alt="product " />
           </div>
           <div className="product-details">
             <h6 className="brand">{item.brand}</h6>
@@ -268,70 +268,7 @@ const Home = () => {
         </div>
       </Container>
 
-      {/* <Container class1="famous-wrapper py-5 home-wrapper-2">
-        <div className="row">
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-1.webp"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5>Big Screen</h5>
-                <h6>Smart Watch Series 7</h6>
-                <p>From $399or $16.62/mo. for 24 mo.*</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-2.webp"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">Studio Display</h5>
-                <h6 className="text-dark">600 nits of brightness.</h6>
-                <p className="text-dark">27-inch 5K Retina display</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-3.webp"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">smartphones</h5>
-                <h6 className="text-dark">Smartphone 13 Pro.</h6>
-                <p className="text-dark">
-                  Now in Green. From $999.00 or $41.62/mo. for 24 mo. Footnote*
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-3">
-            <div className="famous-card position-relative">
-              <img
-                src="images/famous-3.webp"
-                className="img-fluid"
-                alt="famous"
-              />
-              <div className="famous-content position-absolute">
-                <h5 className="text-dark">home speakers</h5>
-                <h6 className="text-dark">Room-filling sound.</h6>
-                <p className="text-dark">
-                  From $699 or $116.58/mo. for 12 mo.*
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container> */}
+     
 
       <Container class1="special-wrapper py-5 home-wrapper-2">
         <div className="row">
@@ -374,7 +311,7 @@ const Home = () => {
         </div>
       </Container>
 
-      <Container class1="marque-wrapper home-wrapper-2 py-5">
+      {/* <Container class1="marque-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
             <div className="marquee-inner-wrapper card-wrapper">
@@ -407,7 +344,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </Container>
+      </Container> */}
     </>
   )
 }

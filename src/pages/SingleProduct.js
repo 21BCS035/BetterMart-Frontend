@@ -100,6 +100,10 @@ const dispatch = useDispatch();
 
       else{
         dispatch(rateAProduct({star:star,comment:comment,prodId:getProductId}));
+
+        setTimeout(()=>{
+          dispatch(getAProduct());
+        },300)
        
       }
       return false;
@@ -109,7 +113,7 @@ const dispatch = useDispatch();
   return (
     <>
       <Meta title={"Product Name"} />
-      <BreadCrumb title="Product Name" />
+      <BreadCrumb title={productState?.title} />
       <Container class1="main-product-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-6">
@@ -166,7 +170,7 @@ const dispatch = useDispatch();
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">( 2 Reviews )</p>
+                  <p className="mb-0 t-review">{productState?.ratings?.length} Reviews</p>
                 </div>
                 <a className="review-btn" href="#review">
                   Write a Review
@@ -251,23 +255,22 @@ const dispatch = useDispatch();
                   </div>
                 </div>
                 <div className="d-flex align-items-center gap-15">
-                  <div>
+                  {/* <div>
                     <a href="">
                       <TbGitCompare className="fs-5 me-2" /> Add to Compare
                     </a>
-                  </div>
-                  <div>
+                  </div> */}
+                  {/* <div>
                     <a href="">
                       <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
                     </a>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="d-flex gap-10 flex-column  my-3">
                   <h3 className="product-heading">Shipping & Returns :</h3>
                   <p className="product-data">
-                    Free shipping and returns available on all orders! <br /> We
-                    ship all US domestic orders within &nbsp;
-                    <b>5-10 business days!</b>
+                    Free shipping and returns available on all orders! <br /> 
+                   
                   </p>
                 </div>
                 <div className="d-flex gap-10 align-items-center my-3">
@@ -314,20 +317,20 @@ const dispatch = useDispatch();
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={Number(productState?.totalrating)}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 2 Reviews</p>
+                    <p className="mb-0">Based on {productState?.ratings?.length} Reviews</p>
                   </div>
                 </div>
-                {orderedProduct && (
+                {/* {orderedProduct && (
                   <div>
                     <a className="text-dark text-decoration-underline" href="">
                       Write a Review
                     </a>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>
@@ -336,7 +339,7 @@ const dispatch = useDispatch();
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={0}
                       edit={true}
                       activeColor="#ffd700"
                       onChange={(e)=>{
@@ -363,26 +366,32 @@ const dispatch = useDispatch();
                 {/* </form> */}
               </div>
               <div className="reviews mt-4">
-                <div className="review">
-                  <div className="d-flex gap-10 align-items-center">
-                    <h6 className="mb-0">Arpit</h6>
-                    <ReactStars
-                      count={5}
-                      size={24}
-                      value={4}
-                      edit={false}
-                      activeColor="#ffd700"
-                    />
-                  </div>
-                  <p className="mt-3">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                    Consectetur fugit ut excepturi quos. Id reprehenderit
-                    voluptatem placeat consequatur suscipit ex. Accusamus dolore
-                    quisquam deserunt voluptate, sit magni perspiciatis quas
-                    iste?
-                  </p>
+                
+                 {
+                  productState && productState?.ratings?.map((item,index)=>{
+                    return(
+                      <div key={index} className="review">
+                      <div  className="d-flex gap-10 align-items-center">
+                      <h6 className="mb-0">Arpit</h6>
+                      <ReactStars
+                        count={5}
+                        size={24}
+                        value={item?.star}
+                        edit={false}
+                        activeColor="#ffd700"
+                      />
+                    </div>
+                   
+                   <p className="mt-3">
+                   {item?.comment}
+                 </p>
+                 </div>
+                    )
+                  })
+                 }
+                  
                 </div>
-              </div>
+              
             </div>
           </div>
         </div>

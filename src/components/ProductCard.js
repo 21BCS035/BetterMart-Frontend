@@ -4,9 +4,7 @@ import { Link, useLocation,useNavigate } from "react-router-dom";
 import prodcompare from "../images/prodcompare.svg";
 import { Markup } from 'interweave';
 import wish from "../images/wish.svg";
- //import wishlist from "../images/wishlist.svg";
-//import watch from "../images/watch.jpg";
-import watch2 from "../images/watch-1.avif";
+import BM from "../images/BM.png";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch, useSelector} from "react-redux";
@@ -41,7 +39,7 @@ const ProductCard = (props) => {
           </div>
           <div className="product-image">
             <img src={item?.images[0].url} className="img-fluid mx-auto " width={230} alt="product" />
-            <img src={watch2} className="img-fluid" alt="product " />
+            <img src={BM} width={195} className="img-fluid" alt="product " />
           </div>
           <div className="product-details">
             <h6 className="brand">{item.brand}</h6>
@@ -103,7 +101,7 @@ const ProductCard = (props) => {
           </div>
           <div className="product-image">
             <img src={watch} className="img-fluid" alt="product" />
-            <img src={watch2} className="img-fluid" alt="product" />
+            <img src={BM} className="img-fluid" alt="product" />
           </div>
           <div className="product-details">
             <h6 className="brand">Havels</h6>
